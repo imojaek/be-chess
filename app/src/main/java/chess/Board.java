@@ -27,6 +27,11 @@ public class Board {
             whitePieces.add(pawn);
     }
 
+    public void start() {
+        initialize();
+        System.out.println(print());
+    }
+
     public void initialize() {
         initPawn();
     }
