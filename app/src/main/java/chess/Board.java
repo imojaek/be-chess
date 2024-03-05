@@ -51,4 +51,12 @@ public class Board {
     public Pawn findPawn(int index) {
         return pawnList.get(index);
     }
+
+    public List<Pawn> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public List<Pawn> getWhitePieces() {
+        return whitePieces;
+    }
 }
