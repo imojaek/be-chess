@@ -1,14 +1,14 @@
-package chess;
+package pieces;
 
 public class Pawn {
 
-    private static final String WHITE = "white";
-    private static final String BLACK = "black";
+    public static final String WHITE_COLOR = "white";
+    private static final String BLACK_COLOR = "black";
 
     private String color;
 
     public Pawn() {
-        this(WHITE);
+        this(WHITE_COLOR);
     }
 
     public Pawn(String color) {
