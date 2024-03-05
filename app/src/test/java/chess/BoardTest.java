@@ -50,5 +50,11 @@ public class BoardTest {
         assertThat(board.getWhitePieces().size()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("현재 보드의 상태가 정상적으로 출력되어야 한다.")
+    void print() {
+        board.initialize();
+        System.out.println(board.print());
+    }
 
 }

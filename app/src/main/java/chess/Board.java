@@ -1,5 +1,6 @@
 package chess;
 
+import chess.pieces.ChessPiece;
 import chess.pieces.Pawn;
 
 import java.util.ArrayList;
@@ -46,6 +47,21 @@ public class Board {
             }
         }
         return boardSize;
+    }
+
+
+    public String print() {
+        StringBuilder sb = new StringBuilder();
+        for (int y = 0; y <= BOARD_Y_MAX; y++) {
+            for (int x = 0; x <= BOARD_X_MAX; x++) {
+                if (board[x][y] != null)
+                    sb.append(board[x][y].getChessIcon());
+                else
+                    sb.append(ChessPiece.NO_PIECE.getChessIcon());
+            }
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 
     public Pawn findPawn(int index) {
