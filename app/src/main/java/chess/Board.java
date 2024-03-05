@@ -32,8 +32,18 @@ public class Board {
     }
 
     private void initPawn() {
+        initWhitePawn();
+        initBlackPawn();
+    }
+
+    private void initWhitePawn() {
         for (int i = 0; i <= BOARD_X_MAX; i++) {
             add(new Pawn(Pawn.WHITE_COLOR), i, BOARD_Y_MAX - 1);
+        }
+    }
+
+    private void initBlackPawn() {
+        for (int i = 0; i <= BOARD_X_MAX; i++) {
             add(new Pawn(Pawn.BLACK_COLOR), i, 0 + 1);
         }
     }
