@@ -6,11 +6,17 @@ import static org.assertj.core.api.Assertions.*;
 public class PawnTest {
 
     @Test
-    @DisplayName("흰색 폰이 생성되어야 한다")
+    @DisplayName("폰이 정상적으로 생성되는지 확인한다.")
     public void create() {
-        Pawn pawn = new Pawn("white");
-        Pawn pawnBlack = new Pawn("black");
-        assertThat(pawn.getColor()).isEqualTo("white");
-        assertThat(pawnBlack.getColor()).isEqualTo("black");
+        final String colorWhite = "white";
+        final String colorBlack = "black";
+        verifyPawnColor(colorWhite);
+        verifyPawnColor(colorBlack);
+    }
+
+    @DisplayName("폰의 color가 잘 들어가는지 확인한다.")
+    private void verifyPawnColor(final String color) {
+        Pawn pawnTest = new Pawn(color);
+        assertThat(pawnTest.getColor()).isEqualTo(color);
     }
 }
