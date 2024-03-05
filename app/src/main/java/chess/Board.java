@@ -1,6 +1,9 @@
 package chess;
 
-import pieces.Pawn;
+import chess.pieces.Pawn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private Pawn[][] board;
@@ -8,14 +11,18 @@ public class Board {
     private int ypos = 0;
     private static final int BOARD_X_MAX = 7;
     private static final int BOARD_Y_MAX = 7;
+    private List<Pawn> pawnList;
 
     public Board() {
         this.board = new Pawn[8][8];
+        pawnList = new ArrayList<>();
     }
 
     public void add(Pawn pawn) {
-        if (findFreeBoard())
+        if (findFreeBoard()) {
             board[xpos][ypos] = pawn;
+            pawnList.add(pawn);
+        }
     }
 
     private boolean findFreeBoard() {
@@ -40,5 +47,9 @@ public class Board {
             }
         }
         return boardSize;
+    }
+
+    public Pawn findPawn(int index) {
+        return pawnList.get(index);
     }
 }

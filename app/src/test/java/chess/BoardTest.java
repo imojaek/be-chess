@@ -2,13 +2,13 @@ package chess;
 
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import pieces.Pawn;
+import chess.pieces.Pawn;
 
 public class BoardTest {
     @Test
+    @DisplayName("보드에 폰을 추가하고 확인할 수 있어야 한다.")
     public void create() throws Exception {
         Board board = new Board();
 
@@ -16,11 +16,11 @@ public class BoardTest {
         assertEquals(white.getColor(), "white");
         board.add(white);
         assertEquals(1, board.size());
-//        assertEquals(white, board.findPawn(0));
-//
+        assertEquals(white, board.findPawn(0));
+
         Pawn black = new Pawn(Pawn.BLACK_COLOR);
         board.add(black);
         assertEquals(2, board.size());
-//        assertEquals(black, board.findPawn(1));
+        assertEquals(black, board.findPawn(1));
     }
 }
