@@ -8,11 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PawnTest {
 
+   private final String WHITE = "white";
+   private final String BLACK = "black";
+
     @Test
     @DisplayName("폰이 정상적으로 생성되는지 확인한다.")
     public void create() {
-        final String WHITE = "white";
-        final String BLACK = "black";
         verifyPawnColor(WHITE);
         verifyPawnColor(BLACK);
     }
@@ -27,6 +28,6 @@ public class PawnTest {
     @DisplayName("기본생성자로 생성되는 폰이 WHITE 색상을 갖는지 확인한다.")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
-        assertEquals("white", pawn.getColor());
+        assertEquals(WHITE, pawn.getColor());
     }
 }
