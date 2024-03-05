@@ -30,4 +30,13 @@ public class PawnTest {
         Pawn pawn = new Pawn();
         assertEquals(WHITE, pawn.getColor());
     }
+
+    @Test
+    @DisplayName("색상에 따라 다른 체스아이콘이 부여되어야 한다.")
+    void verifyIconByColor() {
+        Pawn whitePawn = new Pawn(Pawn.WHITE_COLOR);
+        assertThat(whitePawn.getChessIcon()).isEqualTo(ChessPiece.WHITE_PAWN.getChessIcon());
+        Pawn blackPawn = new Pawn(Pawn.BLACK_COLOR);
+        assertThat(blackPawn.getChessIcon()).isEqualTo(ChessPiece.BLACK_PAWN.getChessIcon());
+    }
 }
