@@ -59,4 +59,20 @@ public class Board {
     public List<Pawn> getWhitePieces() {
         return whitePieces;
     }
+
+    public String getWhitePawnsResult() {
+        StringBuilder sb = new StringBuilder();
+        for (Pawn whitePiece : whitePieces) {
+            sb.append(whitePiece.getChessIcon());
+        }
+        return sb.toString();
+    }
+
+    public String getBlackPawnsResult() {
+        StringBuilder sb = new StringBuilder();
+        for (Pawn blackPiece : blackPieces) {
+            sb.append(blackPiece.getChessIcon());
+        }
+        return sb.toString();
+    }
 }

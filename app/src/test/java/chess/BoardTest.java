@@ -32,9 +32,12 @@ public class BoardTest {
 
     @Test
     @DisplayName("보드가 초기화되어 체스말들이 정상적으로 배치되어야 한다.")
-    void initialize() {
-        board.initialize(); // Feature3 현재, 흰색 검은색 폰이 각각 8개씩 생성되어 배치된다.
-        assertThat(board.size()).isEqualTo(16);
+    public void initialize() throws Exception {
+        Board board = new Board();
+        board.initialize();
+        assertThat(board.size()).isEqualTo(16); // Feature3 현재, 흰색 검은색 폰이 각각 8개씩 생성되어 배치된다.
+        assertEquals("♙♙♙♙♙♙♙♙", board.getWhitePawnsResult());
+        assertEquals("♟♟♟♟♟♟♟♟", board.getBlackPawnsResult());
     }
 
     @Test
@@ -46,4 +49,6 @@ public class BoardTest {
         assertThat(board.getBlackPieces().size()).isEqualTo(2);
         assertThat(board.getWhitePieces().size()).isEqualTo(1);
     }
+
+
 }
