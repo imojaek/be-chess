@@ -3,7 +3,7 @@ package pieces;
 public class Pawn {
 
     public static final String WHITE_COLOR = "white";
-    private static final String BLACK_COLOR = "black";
+    public static final String BLACK_COLOR = "black";
 
     private String color;
 
