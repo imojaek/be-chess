@@ -4,18 +4,19 @@ import chess.pieces.ChessPiece;
 import chess.pieces.Pawn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Board {
-    private Pawn[][] board = new Pawn[8][8]; // -> Piece[][]
-    private static final int BOARD_X_MAX = 7;
-    private static final int BOARD_Y_MAX = 7;
+    private HashMap<String, Pawn> chessBoard = new HashMap<>();
     private List<Pawn> pawnList = new ArrayList<>();
     private List<Pawn> blackPieces = new ArrayList<>();
     private List<Pawn> whitePieces = new ArrayList<>();
+    private static final String BLACK_PAWN_RANK = "7";
+    private static final String WHITE_PAWN_RANK = "2";
 
-    public void add(Pawn pawn, int xpos, int ypos) {
-        board[xpos][ypos] = pawn;
+    public void add(Pawn pawn, String position) {
+        chessBoard.put(position, pawn);
         pawnList.add(pawn);
         classifyPawn(pawn);
     }
@@ -42,35 +43,28 @@ public class Board {
     }
 
     private void initWhitePawn() {
-        for (int i = 0; i <= BOARD_X_MAX; i++) {
-            add(new Pawn(Pawn.WHITE_COLOR), i, BOARD_Y_MAX - 1);
+        for (int file = 'A'; file <= 'H'; file++) {
+            add(new Pawn(Pawn.WHITE_COLOR), file + WHITE_PAWN_RANK);
         }
     }
 
     private void initBlackPawn() {
-        for (int i = 0; i <= BOARD_X_MAX; i++) {
-            add(new Pawn(Pawn.BLACK_COLOR), i, 0 + 1);
+        for (int file = 'A'; file <= 'H'; file++) {
+            add(new Pawn(Pawn.BLACK_COLOR), file + BLACK_PAWN_RANK);
         }
     }
 
     public int size() {
-        int boardSize = 0;
-        for (int x = 0; x <= BOARD_X_MAX; x++) {
-            for (int y = 0; y < BOARD_Y_MAX; y++) {
-                if (board[x][y] != null)
-                    boardSize++;
-            }
-        }
-        return boardSize;
+        return chessBoard.size();
     }
-
 
     public String print() {
         StringBuilder sb = new StringBuilder();
-        for (int y = 0; y <= BOARD_Y_MAX; y++) {
-            for (int x = 0; x <= BOARD_X_MAX; x++) {
-                if (board[x][y] != null)
-                    sb.append(board[x][y].getChessIcon());
+        for (int rank = 8; rank >= 1; rank--) { // 보드의 가장 윗줄인 8랭크부터 출력해야한다.
+            for (int file = 'A'; file <= 'H'; file++) {
+                String targetPos = String.valueOf(file) + rank;
+                if (chessBoard.containsKey(targetPos))
+                    sb.append(chessBoard.get(targetPos).getChessIcon());
                 else
                     sb.append(ChessPiece.NO_PIECE.getChessIcon());
             }
