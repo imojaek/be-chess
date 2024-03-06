@@ -1,10 +1,8 @@
 package chess.pieces;
 
-import chess.pieces.Pawn;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PawnTest {
 
@@ -28,7 +26,7 @@ public class PawnTest {
     @DisplayName("기본생성자로 생성되는 폰이 WHITE 색상을 갖는지 확인한다.")
     public void create_기본생성자() throws Exception {
         Pawn pawn = new Pawn();
-        assertEquals(WHITE, pawn.getColor());
+        assertThat(pawn.getColor()).isEqualTo(WHITE);
     }
 
     @Test
