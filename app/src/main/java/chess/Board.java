@@ -81,7 +81,7 @@ public class Board {
         }
     }
 
-    public int size() {
+    public int pieceCount() {
         return chessBoard.size();
     }
 

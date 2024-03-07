@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.pieces.Piece;
 
+import static chess.utils.StringUtils.*;
+
 public class BoardTest {
 
     Board board;
@@ -18,15 +20,15 @@ public class BoardTest {
 
     @Test
     @DisplayName("보드에 폰을 추가하고 확인할 수 있어야 한다.")
-    public void create() throws Exception {
+    public void create_Pawn() throws Exception {
         Piece white = Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN);
         board.add(white, "B1");
-        assertThat(board.size()).isEqualTo(1);
+        assertThat(board.pieceCount()).isEqualTo(1);
         assertThat(board.findPawn(0)).isEqualTo(white);
 
         Piece black = Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN);
         board.add(black, "G1");
-        assertThat(board.size()).isEqualTo(2);
+        assertThat(board.pieceCount()).isEqualTo(2);
         assertThat(board.findPawn(1)).isEqualTo(black);
     }
 
@@ -35,7 +37,7 @@ public class BoardTest {
     public void initialize() throws Exception {
         Board board = new Board();
         board.initialize();
-        assertThat(board.size()).isEqualTo(16); // Feature3 현재, 흰색 검은색 폰이 각각 8개씩 생성되어 배치된다.
+        assertThat(board.pieceCount()).isEqualTo(16); // Feature3 현재, 흰색 검은색 폰이 각각 8개씩 생성되어 배치된다.
         assertThat(board.getWhitePawnsResult()).isEqualTo("♙♙♙♙♙♙♙♙");
         assertThat(board.getBlackPawnsResult()).isEqualTo("♟♟♟♟♟♟♟♟");
     }
@@ -55,6 +57,27 @@ public class BoardTest {
     void print_initialize() {
         board.initialize();
         System.out.println(board.print());
+    }
+
+    @Test
+    @DisplayName("초기화된 보드에는 32개의 말이 있어야 한다.")
+    void size_initialize() {
+        board.initialize();
+        assertThat(board.pieceCount()).isEqualTo(32);
+    }
+
+    @Test
+    @DisplayName("초기화된 보드가 체스의 초기상태로 정상적으로 출력되어야 한다.")
+    public void create() throws Exception {
+        board.initialize();
+        assertThat(board.pieceCount()).isEqualTo(32);
+        String blankRank = appendNewLine("◻◻◻◻◻◻◻◻");
+
+        assertThat(board.showBoard()).isEqualTo(appendNewLine("♜♞♝♛♚♝♞♜") +
+                                                        appendNewLine("♟♟♟♟♟♟♟♟") +
+                                                        blankRank + blankRank + blankRank + blankRank +
+                                                        appendNewLine("♙♙♙♙♙♙♙♙") +
+                                                        appendNewLine("♖♘♗♕♔♗♘♖"));
     }
 
 }
