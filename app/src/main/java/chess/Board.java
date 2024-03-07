@@ -3,6 +3,8 @@ package chess;
 import chess.pieces.ChessPiece;
 import chess.pieces.Pawn;
 
+import static chess.utils.StringUtils.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +70,7 @@ public class Board {
                 else
                     sb.append(ChessPiece.NO_PIECE.getChessIcon());
             }
-            sb.append('\n');
+            sb.append(appendNewLine(""));
         }
         return sb.toString();
     }
