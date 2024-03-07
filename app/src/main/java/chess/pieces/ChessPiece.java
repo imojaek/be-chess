@@ -1,28 +1,27 @@
 package chess.pieces;
 
 public enum ChessPiece {
-    WHITE_PAWN('♙'),
-    WHITE_KNIGHT('♘'),
-    WHITE_BISHOP('♗'),
-    WHITE_ROOK('♖'),
-    WHITE_QUEEN('♕'),
-    WHITE_KING('♔'),
-    BLACK_PAWN('♟'),
-    BLACK_KNIGHT('♞'),
-    BLACK_BISHOP('♝'),
-    BLACK_ROOK('♜'),
-    BLACK_QUEEN('♛'),
-    BLACK_KING('♚'),
-    NO_PIECE(' ');
+    PAWN('♟', '♙'),
+    ROOK('♜', '♖'),
+    KNIGHT('♞', '♘'),
+    BISHOP('♝','♗'),
+    QUEEN('♚', '♕'),
+    KING('♚', '♔'),
+    NO_PIECE(' ', ' ');
 
-    private final char chessIcon;
+    private final char blackChessIcon;
+    private final char whiteChessIcon;
 
-    ChessPiece(char chessIcon) {
-        this.chessIcon = chessIcon;
+    private ChessPiece(char blackChessIcon, char whiteChessIcon) {
+        this.blackChessIcon = blackChessIcon;
+        this.whiteChessIcon = whiteChessIcon;
     }
 
-    public char getChessIcon() {
-        return chessIcon;
+    public char getBlackChessIcon() {
+        return blackChessIcon;
+    }
+
+    public char getWhiteChessIcon() {
+        return whiteChessIcon;
     }
 }
-
