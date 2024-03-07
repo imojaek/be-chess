@@ -11,7 +11,6 @@ import java.util.List;
 
 public class Board {
     private HashMap<String, Piece> chessBoard = new HashMap<>();
-    private List<Piece> pawnList = new ArrayList<>();
     private List<Piece> blackPieces = new ArrayList<>();
     private List<Piece> whitePieces = new ArrayList<>();
     private static final String BLACK_PAWN_RANK = "7";
@@ -19,7 +18,6 @@ public class Board {
 
     public void add(Piece pawn, String position) {
         chessBoard.put(position, pawn);
-        pawnList.add(pawn);
         classifyPawn(pawn);
     }
 
@@ -32,7 +30,7 @@ public class Board {
 
     public void start() {
         initialize();
-        System.out.println(print());
+        System.out.println(showBoard());
     }
 
     public void initialize() {
@@ -85,27 +83,25 @@ public class Board {
         return chessBoard.size();
     }
 
-    public String print() {
+    public String showBoard() {
         StringBuilder sb = new StringBuilder();
         for (int rank = 8; rank >= 1; rank--) { // 보드의 가장 윗줄인 8랭크부터 출력해야한다.
-            for (char file = 'A'; file <= 'H'; file++) {
-                String targetPos = String.valueOf(file) + rank;
-                if (chessBoard.containsKey(targetPos))
-                    sb.append(chessBoard.get(targetPos).getChessIcon());
-                else
-                    sb.append(ChessPiece.NO_PIECE.getWhiteChessIcon());
-            }
+            sb.append(getLineByRank(rank));
             sb.append(appendNewLine(""));
         }
         return sb.toString();
     }
 
-    public String showBoard() {
-        return print();
-    }
-
-    public Piece findPawn(int index) {
-        return pawnList.get(index);
+    private String getLineByRank(int rank) {
+        StringBuilder sb = new StringBuilder();
+        for (char file = 'A'; file <= 'H'; file++) {
+            String targetPos = String.valueOf(file) + rank;
+            if (chessBoard.containsKey(targetPos)) // 삼항연산자로 바꿔볼까 했으나, 너무 길어져 오히려 읽기 힘들었습니다.
+                sb.append(chessBoard.get(targetPos).getChessIcon());
+            else
+                sb.append(ChessPiece.NO_PIECE.getWhiteChessIcon());
+        }
+        return sb.toString();
     }
 
     public List<Piece> getBlackPieces() {

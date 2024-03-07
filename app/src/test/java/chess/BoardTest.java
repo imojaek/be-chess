@@ -56,7 +56,7 @@ public class BoardTest {
     @DisplayName("초기화된 보드가 정상적으로 출력되어야 한다.")
     void print_initialize() {
         board.initialize();
-        System.out.println(board.print());
+        System.out.println(board.showBoard());
     }
 
     @Test
