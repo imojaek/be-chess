@@ -1,10 +1,11 @@
 package chess;
 
+import chess.pieces.ChessPiece;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 
 public class BoardTest {
 
@@ -18,12 +19,12 @@ public class BoardTest {
     @Test
     @DisplayName("보드에 폰을 추가하고 확인할 수 있어야 한다.")
     public void create() throws Exception {
-        Pawn white = new Pawn(Pawn.WHITE_COLOR);
+        Piece white = Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN);
         board.add(white, "B1");
         assertThat(board.size()).isEqualTo(1);
         assertThat(board.findPawn(0)).isEqualTo(white);
 
-        Pawn black = new Pawn(Pawn.BLACK_COLOR);
+        Piece black = Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN);
         board.add(black, "G1");
         assertThat(board.size()).isEqualTo(2);
         assertThat(board.findPawn(1)).isEqualTo(black);
@@ -42,9 +43,9 @@ public class BoardTest {
     @Test
     @DisplayName("색상에 따라 구분된 리스트에 기물들이 들어가야 한다.")
     void classifyPiece() {
-        board.add(new Pawn(Pawn.BLACK_COLOR), "A1");
-        board.add(new Pawn(Pawn.BLACK_COLOR), "A2");
-        board.add(new Pawn(Pawn.WHITE_COLOR), "A3");
+        board.add(Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN), "A1");
+        board.add(Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN), "A2");
+        board.add(Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN), "A3");
         assertThat(board.getBlackPieces().size()).isEqualTo(2);
         assertThat(board.getWhitePieces().size()).isEqualTo(1);
     }
