@@ -67,3 +67,63 @@ https://jojoldu.tistory.com/681
 
 - StringUtils
   - [x] appendNewLine(String string) : System.getProperty("line.separator") 를 통해 운영체제에 따라 달라지는 개행문자를 커버할 수 있도록 한다.
+
+- Piece
+  - 기존에 폰은 색상정보만 가지고 있었는데, 이제 폰뿐만 아니라 킹, 퀸 등의 다른 기물도 포함해야 한다. 그래서 기물의 이름을 추가로 갖게 한다. 
+  - 값 객체 -> 불변성을 유지해야 한다.
+
+- 팩토리메소드
+  - createNewPiece(String color, ChessPiece pieceType)
+    - color와 pieceType 으로 12가지 체스기물을 구분하고 해당하는 생성메소드를 호출합니다.
+  
+값 객체 (Value Object)
+- 불변하다.
+  - 값 객체는 그 자체로 값을 가지고 있고, 값을 나타낸다. 생성된 이후에는 불변하기 때문에, 필요한 경우 다른 값을 갖는 객체를 생성해야한다. 
+- 동등성으로 비교를 한다
+  - 동등성으로 비교를 하기 때문에, 두 값 객체 내부의 값이 동일하면 그 객체들은 동등한 객체다. 
+
+### 문제
+기존에 아래처럼 폰이 등록될 position을 정할 때 int형 file을 String으로 바꿔 사용했습니다. 
+
+```java
+for (int file = 'A'; file <= 'H'; file++) {
+    String targetPos = String.valueOf(file) + rank;
+...
+```
+
+등록 및 출력을 동일한 로직으로 반복했기때문에 폰만 등록했을때는 문제가 없었습니다. 그런데 이번에 나이트, 비숍 등의 기물을 추가하면서 "A1", "B1" 형태의 문자열로 포지션을 입력했습니다.
+
+기물을 모두 추가하고 출력결과를 확인해보니, 폰만 출력되는 것을 확인했고, 이유를 찾아보니 폰의 position이 672 682 등의 숫자로만 되어있었습니다. 
+int형 file을 사용해서 벌어진 문제였고, char형으로 변경해서 의도했던 동작을 하도록 수정했습니다.
+
+
+### 추가적인 키워드
+ParameterizedTest
+- 어떤 메소드를 테스트할 때, 여러가지 데이터를 매개인자로 넣어 테스트할 수 있도록 해준다.
+- ValueSource, CsvSource, EnumSource 
+- NullSource, EmptySource, NullAndEmptySource
+  - 위와 아래의 source를 동시에 사용할 수 있다. 빈 문자 뿐 아니라 추가로 유효한 문자를 넣고 싶다면 아래와 같이..
+
+```java
+@ParameterizedTest
+@NullAndEmptySource
+@ValueSource(strings = {"  ", "\t", "\n"})
+void isBlank_ShouldReturnTrueForAllTypesOfBlankStrings(String input) {
+    assertTrue(Strings.isBlank(input));
+}
+```
+
+- MethodSource : 명시하는 소스들 뿐 아니라 메소드의 반환값도 source로 사용할 수 있다.
+```java
+@ParameterizedTest
+@MethodSource // hmm, no method name ...
+void isBlank_ShouldReturnTrueForNullOrBlankStringsOneArgument(String input) {
+    assertTrue(Strings.isBlank(input));
+}
+
+private static Stream<String> isBlank_ShouldReturnTrueForNullOrBlankStringsOneArgument() {
+    return Stream.of(null, "", "  ");
+}
+```
+
+https://www.baeldung.com/parameterized-tests-junit-5
