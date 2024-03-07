@@ -1,6 +1,5 @@
 package chess;
 
-import chess.pieces.ChessPiece;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,9 +20,9 @@ public class BoardTest {
     @Test
     @DisplayName("색상에 따라 구분된 리스트에 기물들이 들어가야 한다.")
     void classifyPiece() {
-        board.add(Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN), "A1");
-        board.add(Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN), "A2");
-        board.add(Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN), "A3");
+        board.add(Piece.createNewPiece(Piece.Color.WHITE, Piece.Type.PAWN), "A1");
+        board.add(Piece.createNewPiece(Piece.Color.BLACK, Piece.Type.PAWN), "A2");
+        board.add(Piece.createNewPiece(Piece.Color.BLACK, Piece.Type.PAWN), "A3");
         assertThat(board.getBlackPieces().size()).isEqualTo(2);
         assertThat(board.getWhitePieces().size()).isEqualTo(1);
     }

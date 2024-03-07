@@ -3,9 +3,10 @@ package chess.pieces;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.EnumOptions;
 
 import static org.assertj.core.api.Assertions.*;
+
+import chess.pieces.Piece.*;
 
 public class PieceTest {
 
@@ -15,12 +16,12 @@ public class PieceTest {
     @Test
     @DisplayName("기물이 정상적으로 생성되는지 확인한다.")
     public void create() {
-        verifyPawnColor(WHITE, ChessPiece.PAWN);
-        verifyPawnColor(BLACK, ChessPiece.PAWN);
+        verifyPawnColor(Color.WHITE, Type.PAWN);
+        verifyPawnColor(Color.BLACK, Type.PAWN);
     }
 
     @DisplayName("매개로 받은 기물이 생성되어야 한다.")
-    private void verifyPawnColor(final String color, ChessPiece pieceType) {
+    private void verifyPawnColor(final Color color, Type pieceType) {
         Piece pieceTest = Piece.createNewPiece(color, pieceType);
         assertThat(pieceTest.getColor()).isEqualTo(color);
         assertThat(pieceTest.getPieceType()).isEqualTo(pieceType);
@@ -29,55 +30,53 @@ public class PieceTest {
     @Test
     @DisplayName("색상에 따라 다른 체스아이콘이 부여되어야 한다.")
     void verifyIconByColor() {
-        Piece whitePawn = Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN);
-        assertThat(whitePawn.getChessIcon()).isEqualTo(ChessPiece.PAWN.getWhiteChessIcon());
-        Piece blackPawn = Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN);
-        assertThat(blackPawn.getChessIcon()).isEqualTo(ChessPiece.PAWN.getBlackChessIcon());
+        Piece whitePawn = Piece.createNewPiece(Color.WHITE, Type.PAWN);
+        assertThat(whitePawn.getChessIcon()).isEqualTo(Type.PAWN.getWhiteRepresentation());
+        Piece blackPawn = Piece.createNewPiece(Color.BLACK, Type.PAWN);
+        assertThat(blackPawn.getChessIcon()).isEqualTo(Type.PAWN.getBlackRepresentation());
     }
 
     @Test
     @DisplayName("메소드 팩토리가 color, chessPiece 별로 정확한 기물을 생성해야 한다.")
     public void create_piece_factory() {
-        Piece blackBishop = Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.BISHOP);
-        assertThat(blackBishop.getColor()).isEqualTo(Piece.BLACK_COLOR);
-        assertThat(blackBishop.getChessIcon()).isEqualTo(ChessPiece.BISHOP.getBlackChessIcon());
+        Piece blackBishop = Piece.createNewPiece(Color.BLACK, Type.BISHOP);
+        assertThat(blackBishop.getColor()).isEqualTo(Color.BLACK);
+        assertThat(blackBishop.getChessIcon()).isEqualTo(Type.BISHOP.getBlackRepresentation());
 
-        Piece whiteKnight = Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.KNIGHT);
-        assertThat(whiteKnight.getColor()).isEqualTo(Piece.WHITE_COLOR);
-        assertThat(whiteKnight.getChessIcon()).isEqualTo(ChessPiece.KNIGHT.getWhiteChessIcon());
+        Piece whiteKnight = Piece.createNewPiece(Color.WHITE, Type.KNIGHT);
+        assertThat(whiteKnight.getColor()).isEqualTo(Color.WHITE);
+        assertThat(whiteKnight.getChessIcon()).isEqualTo(Type.KNIGHT.getWhiteRepresentation());
     }
-
-
 
     @Test
     @DisplayName("메소드별로 정확한 기물이 생성되어야 한다.")
     public void create_piece() {
-        verifyPiece(Piece.createWhitePawn(), Piece.WHITE_COLOR, ChessPiece.PAWN.getWhiteChessIcon());
-        verifyPiece(Piece.createBlackPawn(), Piece.BLACK_COLOR, ChessPiece.PAWN.getBlackChessIcon());
-        verifyPiece(Piece.createWhiteKnight(), Piece.WHITE_COLOR, ChessPiece.KNIGHT.getWhiteChessIcon());
-        verifyPiece(Piece.createBlackKnight(), Piece.BLACK_COLOR, ChessPiece.KNIGHT.getBlackChessIcon());
-        verifyPiece(Piece.createWhiteBishop(), Piece.WHITE_COLOR, ChessPiece.BISHOP.getWhiteChessIcon());
-        verifyPiece(Piece.createBlackBishop(), Piece.BLACK_COLOR, ChessPiece.BISHOP.getBlackChessIcon());
-        verifyPiece(Piece.createWhiteRook(), Piece.WHITE_COLOR, ChessPiece.ROOK.getWhiteChessIcon());
-        verifyPiece(Piece.createBlackRook(), Piece.BLACK_COLOR, ChessPiece.ROOK.getBlackChessIcon());
-        verifyPiece(Piece.createWhiteQueen(), Piece.WHITE_COLOR, ChessPiece.QUEEN.getWhiteChessIcon());
-        verifyPiece(Piece.createBlackQueen(), Piece.BLACK_COLOR, ChessPiece.QUEEN.getBlackChessIcon());
-        verifyPiece(Piece.createWhiteKing(), Piece.WHITE_COLOR, ChessPiece.KING.getWhiteChessIcon());
-        verifyPiece(Piece.createBlackKing(), Piece.BLACK_COLOR, ChessPiece.KING.getBlackChessIcon());
+        verifyPiece(Piece.createWhitePawn(), Color.WHITE, Type.PAWN.getWhiteRepresentation());
+        verifyPiece(Piece.createBlackPawn(), Color.BLACK, Type.PAWN.getBlackRepresentation());
+        verifyPiece(Piece.createWhiteKnight(), Color.WHITE, Type.KNIGHT.getWhiteRepresentation());
+        verifyPiece(Piece.createBlackKnight(), Color.BLACK, Type.KNIGHT.getBlackRepresentation());
+        verifyPiece(Piece.createWhiteBishop(), Color.WHITE, Type.BISHOP.getWhiteRepresentation());
+        verifyPiece(Piece.createBlackBishop(), Color.BLACK, Type.BISHOP.getBlackRepresentation());
+        verifyPiece(Piece.createWhiteRook(), Color.WHITE, Type.ROOK.getWhiteRepresentation());
+        verifyPiece(Piece.createBlackRook(), Color.BLACK, Type.ROOK.getBlackRepresentation());
+        verifyPiece(Piece.createWhiteQueen(), Color.WHITE, Type.QUEEN.getWhiteRepresentation());
+        verifyPiece(Piece.createBlackQueen(), Color.BLACK, Type.QUEEN.getBlackRepresentation());
+        verifyPiece(Piece.createWhiteKing(), Color.WHITE, Type.KING.getWhiteRepresentation());
+        verifyPiece(Piece.createBlackKing(), Color.BLACK, Type.KING.getBlackRepresentation());
     }
 
-    private void verifyPiece(final Piece piece, final String color, final char chessIcon) {
+    private void verifyPiece(final Piece piece, final Piece.Color color, final char chessIcon) {
         assertThat(piece.getColor()).isEqualTo(color);
         assertThat(piece.getChessIcon()).isEqualTo(chessIcon);
     }
 
     @ParameterizedTest
-    @EnumSource(ChessPiece.class)
+    @EnumSource(Type.class)
     @DisplayName("팩토리 메소드로 `색상 * 기물종류 = 12종`의 기물이 정상적으로 생성되어야 한다.")
-    public void create_piece_factory_12(ChessPiece pieceType) {
-        if (!pieceType.equals(ChessPiece.NO_PIECE)) {
-            verifyPiece(Piece.createNewPiece(Piece.WHITE_COLOR, pieceType), Piece.WHITE_COLOR, pieceType.getWhiteChessIcon());
-            verifyPiece(Piece.createNewPiece(Piece.BLACK_COLOR, pieceType), Piece.BLACK_COLOR, pieceType.getBlackChessIcon());
+    public void create_piece_factory_12(Type pieceType) {
+        if (!pieceType.equals(Type.NO_PIECE)) {
+            verifyPiece(Piece.createNewPiece(Color.WHITE, pieceType), Color.WHITE, pieceType.getWhiteRepresentation());
+            verifyPiece(Piece.createNewPiece(Color.BLACK, pieceType), Color.BLACK, pieceType.getBlackRepresentation());
         }
     }
 

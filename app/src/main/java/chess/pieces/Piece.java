@@ -2,21 +2,50 @@ package chess.pieces;
 
 public class Piece {
 
-    public static final String WHITE_COLOR = "white";
-    public static final String BLACK_COLOR = "black";
-    private final char chessIcon;
-    private final String color;
-    private final ChessPiece pieceType;
+    public enum Color {
+        WHITE, BLACK, NOCOLOR;
+    }
 
-    private Piece(String color, ChessPiece pieceType) {
+    public enum Type {
+
+        PAWN('♟', '♙'),
+        ROOK('♜', '♖'),
+        KNIGHT('♞', '♘'),
+        BISHOP('♝','♗'),
+        QUEEN('♛', '♕'),
+        KING('♚', '♔'),
+        NO_PIECE('◻', '◻');
+
+        private final char blackRepresentation;
+        private final char whiteRepresentation;
+
+        Type(char blackRepresentation, char whiteRepresentation) {
+            this.blackRepresentation = blackRepresentation;
+            this.whiteRepresentation = whiteRepresentation;
+        }
+
+        public char getWhiteRepresentation() {
+            return whiteRepresentation;
+        }
+
+        public char getBlackRepresentation() {
+            return blackRepresentation;
+        }
+    }
+
+    private final char chessIcon;
+    private final Color color;
+    private final Type pieceType;
+
+    private Piece(Color color, Type pieceType) {
         this.color = color;
         this.pieceType = pieceType;
         this.chessIcon = setPieceChessIcon();
     }
 
-    static public Piece createNewPiece(String color, ChessPiece pieceType) {
+    static public Piece createNewPiece(Color pieceColor, Type pieceType) {
         Piece piece = null;
-        if (color.equals(WHITE_COLOR)) {
+        if (pieceColor.equals(Color.WHITE)) {
             switch (pieceType) {
                 case PAWN:
                     piece = createWhitePawn();
@@ -38,7 +67,7 @@ public class Piece {
                     break;
             }
         }
-        else if (color.equals(BLACK_COLOR)) {
+        else if (pieceColor.equals(Color.BLACK)) {
             switch (pieceType) {
                 case PAWN:
                     piece = createBlackPawn();
@@ -64,57 +93,57 @@ public class Piece {
     }
 
     public static Piece createBlackPawn() {
-        return new Piece(BLACK_COLOR, ChessPiece.PAWN);
+        return new Piece(Color.BLACK, Type.PAWN);
     }
     public static Piece createWhitePawn() {
-        return new Piece(WHITE_COLOR, ChessPiece.PAWN);
+        return new Piece(Color.WHITE, Type.PAWN);
     }
     public static Piece createBlackKing() {
-        return new Piece(BLACK_COLOR, ChessPiece.KING);
+        return new Piece(Color.BLACK, Type.KING);
     }
     public static Piece createWhiteKing() {
-        return new Piece(WHITE_COLOR, ChessPiece.KING);
+        return new Piece(Color.WHITE, Type.KING);
     }
     public static Piece createBlackQueen() {
-        return new Piece(BLACK_COLOR, ChessPiece.QUEEN);
+        return new Piece(Color.BLACK, Type.QUEEN);
     }
     public static Piece createWhiteQueen() {
-        return new Piece(WHITE_COLOR, ChessPiece.QUEEN);
+        return new Piece(Color.WHITE, Type.QUEEN);
     }
     public static Piece createBlackRook() {
-        return new Piece(BLACK_COLOR, ChessPiece.ROOK);
+        return new Piece(Color.BLACK, Type.ROOK);
     }
     public static Piece createWhiteRook() {
-        return new Piece(WHITE_COLOR, ChessPiece.ROOK);
+        return new Piece(Color.WHITE, Type.ROOK);
     }
     public static Piece createBlackBishop() {
-        return new Piece(BLACK_COLOR, ChessPiece.BISHOP);
+        return new Piece(Color.BLACK, Type.BISHOP);
     }
     public static Piece createWhiteBishop() {
-        return new Piece(WHITE_COLOR, ChessPiece.BISHOP);
+        return new Piece(Color.WHITE, Type.BISHOP);
     }
     public static Piece createBlackKnight() {
-        return new Piece(BLACK_COLOR, ChessPiece.KNIGHT);
+        return new Piece(Color.BLACK, Type.KNIGHT);
     }
     public static Piece createWhiteKnight() {
-        return new Piece(WHITE_COLOR, ChessPiece.KNIGHT);
+        return new Piece(Color.WHITE, Type.KNIGHT);
     }
 
     private char setPieceChessIcon() {
-        if (color.equals(WHITE_COLOR))
-            return pieceType.getWhiteChessIcon();
+        if (color.equals(Color.WHITE))
+            return pieceType.getWhiteRepresentation();
         else
-            return pieceType.getBlackChessIcon();
+            return pieceType.getBlackRepresentation();
     }
 
     public boolean isWhite() {
-        return color.equals(WHITE_COLOR);
+        return color.equals(Color.WHITE);
     }
     public boolean isBlack() {
-        return color.equals(BLACK_COLOR);
+        return color.equals(Color.BLACK);
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -122,7 +151,7 @@ public class Piece {
         return chessIcon;
     }
 
-    public ChessPiece getPieceType() {
+    public Type getPieceType() {
         return pieceType;
     }
 }

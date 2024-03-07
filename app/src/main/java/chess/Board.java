@@ -1,7 +1,7 @@
 package chess;
 
-import chess.pieces.ChessPiece;
 import chess.pieces.Piece;
+import chess.pieces.Piece.*;
 
 import static chess.utils.StringUtils.*;
 
@@ -22,9 +22,9 @@ public class Board {
     }
 
     private void classifyPawn(Piece pawn) {
-        if (pawn.getColor().equals(Piece.BLACK_COLOR))
+        if (pawn.getColor().equals(Color.BLACK))
             blackPieces.add(pawn);
-        else if (pawn.getColor().equals(Piece.WHITE_COLOR))
+        else if (pawn.getColor().equals(Color.WHITE))
             whitePieces.add(pawn);
     }
 
@@ -50,32 +50,32 @@ public class Board {
 
     private void initWhitePawn() {
         for (char file = 'A'; file <= 'H'; file++) {
-            add(Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN), file + WHITE_PAWN_RANK);
+            add(Piece.createNewPiece(Color.WHITE, Type.PAWN), file + WHITE_PAWN_RANK);
         }
     }
     private void initBlackPawn() {
         for (char file = 'A'; file <= 'H'; file++) {
-            add(Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN), file + BLACK_PAWN_RANK);
+            add(Piece.createNewPiece(Color.BLACK, Type.PAWN), file + BLACK_PAWN_RANK);
         }
     }
 
     private void initWhiteMinorAndMajorPieces() {
-        List<ChessPiece> pieces = List.of(ChessPiece.ROOK, ChessPiece.KNIGHT, ChessPiece.BISHOP, ChessPiece.QUEEN,
-                                            ChessPiece.KING, ChessPiece.BISHOP, ChessPiece.KNIGHT, ChessPiece.ROOK);
+        List<Type> pieces = List.of(Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN,
+                Type.KING, Type.BISHOP, Type.KNIGHT, Type.ROOK);
         List<String> position = List.of("A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1");
 
         for (int i = 0; i < pieces.size(); i++) {
-            add(Piece.createNewPiece(Piece.WHITE_COLOR, pieces.get(i)), position.get(i));
+            add(Piece.createNewPiece(Color.WHITE, pieces.get(i)), position.get(i));
         }
     }
 
     private void initBlackMinorAndMajorPieces() {
-        List<ChessPiece> pieces = List.of(ChessPiece.ROOK, ChessPiece.KNIGHT, ChessPiece.BISHOP, ChessPiece.QUEEN,
-                                            ChessPiece.KING, ChessPiece.BISHOP, ChessPiece.KNIGHT, ChessPiece.ROOK);
+        List<Type> pieces = List.of(Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN,
+                Type.KING, Type.BISHOP, Type.KNIGHT, Type.ROOK);
         List<String> position = List.of("A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8");
 
         for (int i = 0; i < pieces.size(); i++) {
-            add(Piece.createNewPiece(Piece.BLACK_COLOR, pieces.get(i)), position.get(i));
+            add(Piece.createNewPiece(Color.BLACK, pieces.get(i)), position.get(i));
         }
     }
 
@@ -99,7 +99,7 @@ public class Board {
             if (chessBoard.containsKey(targetPos)) // 삼항연산자로 바꿔볼까 했으나, 너무 길어져 오히려 읽기 힘들었습니다.
                 sb.append(chessBoard.get(targetPos).getChessIcon());
             else
-                sb.append(ChessPiece.NO_PIECE.getWhiteChessIcon());
+                sb.append(Type.NO_PIECE.getBlackRepresentation());
         }
         return sb.toString();
     }
