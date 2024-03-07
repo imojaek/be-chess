@@ -36,23 +36,48 @@ public class Board {
     }
 
     public void initialize() {
-        initPawn();
+        initWhite();
+        initBlack();
     }
 
-    private void initPawn() {
+    private void initWhite() {
+        initWhiteMinorAndMajorPieces();
         initWhitePawn();
+    }
+
+    private void initBlack() {
+        initBlackMinorAndMajorPieces();
         initBlackPawn();
     }
 
     private void initWhitePawn() {
-        for (int file = 'A'; file <= 'H'; file++) {
+        for (char file = 'A'; file <= 'H'; file++) {
             add(Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.PAWN), file + WHITE_PAWN_RANK);
         }
     }
-
     private void initBlackPawn() {
-        for (int file = 'A'; file <= 'H'; file++) {
+        for (char file = 'A'; file <= 'H'; file++) {
             add(Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.PAWN), file + BLACK_PAWN_RANK);
+        }
+    }
+
+    private void initWhiteMinorAndMajorPieces() {
+        List<ChessPiece> pieces = List.of(ChessPiece.ROOK, ChessPiece.KNIGHT, ChessPiece.BISHOP, ChessPiece.QUEEN,
+                                            ChessPiece.KING, ChessPiece.BISHOP, ChessPiece.KNIGHT, ChessPiece.ROOK);
+        List<String> position = List.of("A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1");
+
+        for (int i = 0; i < pieces.size(); i++) {
+            add(Piece.createNewPiece(Piece.WHITE_COLOR, pieces.get(i)), position.get(i));
+        }
+    }
+
+    private void initBlackMinorAndMajorPieces() {
+        List<ChessPiece> pieces = List.of(ChessPiece.ROOK, ChessPiece.KNIGHT, ChessPiece.BISHOP, ChessPiece.QUEEN,
+                                            ChessPiece.KING, ChessPiece.BISHOP, ChessPiece.KNIGHT, ChessPiece.ROOK);
+        List<String> position = List.of("A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8");
+
+        for (int i = 0; i < pieces.size(); i++) {
+            add(Piece.createNewPiece(Piece.BLACK_COLOR, pieces.get(i)), position.get(i));
         }
     }
 
@@ -63,7 +88,7 @@ public class Board {
     public String print() {
         StringBuilder sb = new StringBuilder();
         for (int rank = 8; rank >= 1; rank--) { // 보드의 가장 윗줄인 8랭크부터 출력해야한다.
-            for (int file = 'A'; file <= 'H'; file++) {
+            for (char file = 'A'; file <= 'H'; file++) {
                 String targetPos = String.valueOf(file) + rank;
                 if (chessBoard.containsKey(targetPos))
                     sb.append(chessBoard.get(targetPos).getChessIcon());
@@ -73,6 +98,10 @@ public class Board {
             sb.append(appendNewLine(""));
         }
         return sb.toString();
+    }
+
+    public String showBoard() {
+        return print();
     }
 
     public Piece findPawn(int index) {
