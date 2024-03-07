@@ -100,12 +100,18 @@ public class Piece {
         return new Piece(WHITE_COLOR, ChessPiece.KNIGHT);
     }
 
-
     private char setPieceChessIcon() {
         if (color.equals(WHITE_COLOR))
             return pieceType.getWhiteChessIcon();
         else
             return pieceType.getBlackChessIcon();
+    }
+
+    public boolean isWhite() {
+        return color.equals(WHITE_COLOR);
+    }
+    public boolean isBlack() {
+        return color.equals(BLACK_COLOR);
     }
 
     public String getColor() {

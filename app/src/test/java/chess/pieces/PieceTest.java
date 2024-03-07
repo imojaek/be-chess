@@ -36,7 +36,7 @@ public class PieceTest {
     @DisplayName("메소드 팩토리가 color, chessPiece 별로 정확한 기물을 생성해야 한다.")
     public void create_piece_factory() {
         Piece blackBishop = Piece.createNewPiece(Piece.BLACK_COLOR, ChessPiece.BISHOP);
-        assertThat(blackBishop.getColor()).isEqualTo(Piece.BLACK_COLOR);    
+        assertThat(blackBishop.getColor()).isEqualTo(Piece.BLACK_COLOR);
         assertThat(blackBishop.getChessIcon()).isEqualTo(ChessPiece.BISHOP.getBlackChessIcon());
 
         Piece whiteKnight = Piece.createNewPiece(Piece.WHITE_COLOR, ChessPiece.KNIGHT);
@@ -64,6 +64,26 @@ public class PieceTest {
     private void verifyPiece(final Piece piece, final String color, final char chessIcon) {
         assertThat(piece.getColor()).isEqualTo(color);
         assertThat(piece.getChessIcon()).isEqualTo(chessIcon);
+    }
+
+    @Test
+    @DisplayName("현재 기물이 검은색인지 확인한다.")
+    public void isBlack() {
+        Piece blackPawn = Piece.createBlackPawn();
+        assertThat(blackPawn.isBlack()).isTrue();
+
+        Piece whitePawn = Piece.createWhitePawn();
+        assertThat(whitePawn.isBlack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("현재 기물이 흰색인지 확인한다.")
+    public void isWhite() {
+        Piece blackKnight = Piece.createBlackKnight();
+        assertThat(blackKnight.isWhite()).isTrue();
+
+        Piece whiteKnight = Piece.createWhiteKnight();
+        assertThat(whiteKnight.isWhite()).isFalse();
     }
 
 }
