@@ -1,6 +1,9 @@
 package chess.pieces;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.EnumOptions;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -44,6 +47,8 @@ public class PieceTest {
         assertThat(whiteKnight.getChessIcon()).isEqualTo(ChessPiece.KNIGHT.getWhiteChessIcon());
     }
 
+
+
     @Test
     @DisplayName("메소드별로 정확한 기물이 생성되어야 한다.")
     public void create_piece() {
@@ -66,6 +71,16 @@ public class PieceTest {
         assertThat(piece.getChessIcon()).isEqualTo(chessIcon);
     }
 
+    @ParameterizedTest
+    @EnumSource(ChessPiece.class)
+    @DisplayName("팩토리 메소드로 `색상 * 기물종류 = 12종`의 기물이 정상적으로 생성되어야 한다.")
+    public void create_piece_factory_12(ChessPiece pieceType) {
+        if (!pieceType.equals(ChessPiece.NO_PIECE)) {
+            verifyPiece(Piece.createNewPiece(Piece.WHITE_COLOR, pieceType), Piece.WHITE_COLOR, pieceType.getWhiteChessIcon());
+            verifyPiece(Piece.createNewPiece(Piece.BLACK_COLOR, pieceType), Piece.BLACK_COLOR, pieceType.getBlackChessIcon());
+        }
+    }
+
     @Test
     @DisplayName("현재 기물이 검은색인지 확인한다.")
     public void isBlack() {
@@ -80,10 +95,10 @@ public class PieceTest {
     @DisplayName("현재 기물이 흰색인지 확인한다.")
     public void isWhite() {
         Piece blackKnight = Piece.createBlackKnight();
-        assertThat(blackKnight.isWhite()).isTrue();
+        assertThat(blackKnight.isWhite()).isFalse();
 
         Piece whiteKnight = Piece.createWhiteKnight();
-        assertThat(whiteKnight.isWhite()).isFalse();
+        assertThat(whiteKnight.isWhite()).isTrue();
     }
 
 }
