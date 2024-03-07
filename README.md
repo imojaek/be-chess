@@ -61,3 +61,9 @@
 ### 테스트하기 좋은 코드?
 
 https://jojoldu.tistory.com/681
+
+---
+## Step - 4
+
+- StringUtils
+  - [x] appendNewLine(String string) : System.getProperty("line.separator") 를 통해 운영체제에 따라 달라지는 개행문자를 커버할 수 있도록 한다.
