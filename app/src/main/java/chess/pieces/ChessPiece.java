@@ -5,9 +5,9 @@ public enum ChessPiece {
     ROOK('♜', '♖'),
     KNIGHT('♞', '♘'),
     BISHOP('♝','♗'),
-    QUEEN('♚', '♕'),
+    QUEEN('♛', '♕'),
     KING('♚', '♔'),
-    NO_PIECE(' ', ' ');
+    NO_PIECE('◻', '◻');
 
     private final char blackChessIcon;
     private final char whiteChessIcon;
