@@ -63,6 +63,11 @@ public class PieceTest {
         verifyPiece(Piece.createBlackQueen(), Color.BLACK, Type.QUEEN.getBlackRepresentation());
         verifyPiece(Piece.createWhiteKing(), Color.WHITE, Type.KING.getWhiteRepresentation());
         verifyPiece(Piece.createBlackKing(), Color.BLACK, Type.KING.getBlackRepresentation());
+
+        Piece blank = Piece.createBlank();
+        assertThat(blank.isWhite()).isFalse();;
+        assertThat(blank.isBlack()).isFalse();
+        assertThat(blank.getPieceType()).isEqualTo(Type.NO_PIECE);
     }
 
     private void verifyPiece(final Piece piece, final Piece.Color color, final char chessIcon) {

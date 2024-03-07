@@ -129,6 +129,10 @@ public class Piece {
         return new Piece(Color.WHITE, Type.KNIGHT);
     }
 
+    public static Piece createBlank() {
+        return new Piece(Color.NOCOLOR, Type.NO_PIECE);
+    }
+
     private char setPieceChessIcon() {
         if (color.equals(Color.WHITE))
             return pieceType.getWhiteRepresentation();
