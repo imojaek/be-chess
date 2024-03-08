@@ -5,8 +5,15 @@ import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.pieces.Piece;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import javax.annotation.meta.TypeQualifier;
 
 import static chess.utils.StringUtils.*;
+import chess.pieces.Piece.*; // Color, Type;
+
+import java.awt.Color;
 
 public class BoardTest {
 
@@ -55,4 +62,18 @@ public class BoardTest {
                                                         appendNewLine("♖♘♗♕♔♗♘♖"));
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "PAWN, 8",
+            "KNIGHT, 2",
+            "BISHOP, 2",
+            "ROOK, 2",
+            "KING, 1",
+            "QUEEN, 1"})
+    @DisplayName("기물의 색 및 종류에 따라 개수를 정확히 계산해야 한다.")
+    void pieceCount(Type type, int expectedResult) {
+        board.initialize();
+        assertThat(board.pieceCount(Piece.Color.WHITE, type)).isEqualTo(expectedResult);
+        assertThat(board.pieceCount(Piece.Color.BLACK, type)).isEqualTo(expectedResult);
+    }
 }
