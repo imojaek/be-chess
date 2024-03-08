@@ -127,6 +127,14 @@ public class Board {
     }
 
 
+    public void move(String position, Piece piece) {
+        if (chessBoard.containsKey(position.toUpperCase())) {
+            chessBoard.remove(position.toUpperCase());
+        }
+        chessBoard.put(position.toUpperCase(), piece);
+    }
+
+
     public String showBoard() {
         StringBuilder sb = new StringBuilder();
         for (int rank = 8; rank >= 1; rank--) { // 보드의 가장 윗줄인 8랭크부터 출력해야한다.
