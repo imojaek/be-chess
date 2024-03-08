@@ -164,4 +164,9 @@ public class Piece {
     public Type getPieceType() {
         return pieceType;
     }
+
+    public boolean isSameType(Type type) {
+        return pieceType.equals(type);
+    }
+
 }

@@ -83,6 +83,35 @@ public class Board {
         return chessBoard.size();
     }
 
+    public int pieceCount(Color color, Type type) {
+        if (color.equals(Color.WHITE)) {
+            return countWhitePieceByType(type);
+        }
+        else if (color.equals(Color.BLACK)) {
+            return countBlackPieceByType(type);
+        }
+        return 0; // 예외처리?
+    }
+
+    private int countWhitePieceByType(Type type) {
+        int count = 0;
+        for (Piece piece : whitePieces) {
+            if (piece.isSameType(type))
+                count++;
+        }
+        return count;
+    }
+
+    private int countBlackPieceByType(Type type) {
+        int count = 0;
+        for (Piece piece : blackPieces) {
+            if (piece.isSameType(type))
+                count++;
+        }
+        return count;
+    }
+
+
     public String showBoard() {
         StringBuilder sb = new StringBuilder();
         for (int rank = 8; rank >= 1; rank--) { // 보드의 가장 윗줄인 8랭크부터 출력해야한다.
