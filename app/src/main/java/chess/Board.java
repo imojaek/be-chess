@@ -36,6 +36,8 @@ public class Board {
     public void initialize() {
         initWhite();
         initBlack();
+
+        initBlank();
     }
 
     private void initWhite() {
@@ -46,6 +48,14 @@ public class Board {
     private void initBlack() {
         initBlackMinorAndMajorPieces();
         initBlackPawn();
+    }
+
+    private void initBlank() {
+        for (int rank = 3; rank <= 6; rank++) {
+            for (char file = 'A'; file <= 'H'; file++) {
+                add(Piece.createNewPiece(Color.NOCOLOR, Type.NO_PIECE), file + String.valueOf(rank));
+            }
+        }
     }
 
     private void initWhitePawn() {
@@ -111,6 +121,7 @@ public class Board {
         return count;
     }
 
+    // TODO:  추후 사용자의 입력을 받을 경우, UpperCase 처리를 해야한다.
     public Piece findPiece(String position) {
         return chessBoard.get(position);
     }
@@ -129,10 +140,7 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         for (char file = 'A'; file <= 'H'; file++) {
             String targetPos = String.valueOf(file) + rank;
-            if (chessBoard.containsKey(targetPos)) // 삼항연산자로 바꿔볼까 했으나, 너무 길어져 오히려 읽기 힘들었습니다.
-                sb.append(chessBoard.get(targetPos).getChessIcon());
-            else
-                sb.append(Type.NO_PIECE.getBlackRepresentation());
+            sb.append(chessBoard.get(targetPos).getChessIcon());
         }
         return sb.toString();
     }

@@ -89,6 +89,8 @@ public class Piece {
                     break;
             }
         }
+        else
+            piece = createBlank();
         return piece;
     }
 
@@ -155,6 +157,10 @@ public class Piece {
 
     public char getChessIcon() {
         return chessIcon;
+    }
+
+    public boolean isSamePiece(Piece comparePiece) {
+        return comparePiece.isSameColor(this.color) && comparePiece.isSameType(this.pieceType);
     }
 
     public boolean isSameColor(Color compareColor) {
