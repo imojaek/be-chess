@@ -23,8 +23,8 @@ public class PieceTest {
     @DisplayName("매개로 받은 기물이 생성되어야 한다.")
     private void verifyPawnColor(final Color color, Type pieceType) {
         Piece pieceTest = Piece.createNewPiece(color, pieceType);
-        assertThat(pieceTest.getColor()).isEqualTo(color);
-        assertThat(pieceTest.getPieceType()).isEqualTo(pieceType);
+        assertThat(pieceTest.isSameColor(color)).isTrue();
+        assertThat(pieceTest.isSameType(pieceType)).isTrue();
     }
 
     @Test
@@ -40,11 +40,11 @@ public class PieceTest {
     @DisplayName("메소드 팩토리가 color, chessPiece 별로 정확한 기물을 생성해야 한다.")
     public void create_piece_factory() {
         Piece blackBishop = Piece.createNewPiece(Color.BLACK, Type.BISHOP);
-        assertThat(blackBishop.getColor()).isEqualTo(Color.BLACK);
+        assertThat(blackBishop.isSameColor(Color.BLACK)).isTrue();
         assertThat(blackBishop.getChessIcon()).isEqualTo(Type.BISHOP.getBlackRepresentation());
 
         Piece whiteKnight = Piece.createNewPiece(Color.WHITE, Type.KNIGHT);
-        assertThat(whiteKnight.getColor()).isEqualTo(Color.WHITE);
+        assertThat(whiteKnight.isSameColor(Color.WHITE)).isTrue();
         assertThat(whiteKnight.getChessIcon()).isEqualTo(Type.KNIGHT.getWhiteRepresentation());
     }
 
@@ -65,13 +65,13 @@ public class PieceTest {
         verifyPiece(Piece.createBlackKing(), Color.BLACK, Type.KING.getBlackRepresentation());
 
         Piece blank = Piece.createBlank();
-        assertThat(blank.isWhite()).isFalse();;
+        assertThat(blank.isWhite()).isFalse();
         assertThat(blank.isBlack()).isFalse();
-        assertThat(blank.getPieceType()).isEqualTo(Type.NO_PIECE);
+        assertThat(blank.isSameType(Type.NO_PIECE)).isTrue();
     }
 
     private void verifyPiece(final Piece piece, final Piece.Color color, final char chessIcon) {
-        assertThat(piece.getColor()).isEqualTo(color);
+        assertThat(piece.isSameColor(color)).isTrue();
         assertThat(piece.getChessIcon()).isEqualTo(chessIcon);
     }
 

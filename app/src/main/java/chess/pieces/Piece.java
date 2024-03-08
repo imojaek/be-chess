@@ -153,20 +153,16 @@ public class Piece {
         return color.equals(Color.BLACK);
     }
 
-    public Color getColor() {
-        return color;
-    }
-
     public char getChessIcon() {
         return chessIcon;
     }
 
-    public Type getPieceType() {
-        return pieceType;
+    public boolean isSameColor(Color compareColor) {
+        return this.color.equals(compareColor);
     }
 
-    public boolean isSameType(Type type) {
-        return pieceType.equals(type);
+    public boolean isSameType(Type compareType) {
+        return pieceType.equals(compareType);
     }
 
 }

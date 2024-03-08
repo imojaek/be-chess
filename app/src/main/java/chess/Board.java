@@ -22,9 +22,9 @@ public class Board {
     }
 
     private void classifyPawn(Piece pawn) {
-        if (pawn.getColor().equals(Color.BLACK))
+        if (pawn.isSameColor(Color.BLACK))
             blackPieces.add(pawn);
-        else if (pawn.getColor().equals(Color.WHITE))
+        else if (pawn.isSameColor(Color.WHITE))
             whitePieces.add(pawn);
     }
 
@@ -109,6 +109,10 @@ public class Board {
                 count++;
         }
         return count;
+    }
+
+    public Piece findPiece(String position) {
+        return chessBoard.get(position);
     }
 
 
