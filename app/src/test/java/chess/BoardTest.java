@@ -53,7 +53,11 @@ public class BoardTest {
     public void create() throws Exception {
         board.initialize();
         assertThat(board.pieceCount()).isEqualTo(32);
-        String blankRank = appendNewLine("◻◻◻◻◻◻◻◻");
+        StringBuilder blankRankBuilder = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            blankRankBuilder.append(Type.NO_PIECE.getBlackRepresentation());
+        }
+        String blankRank = appendNewLine(blankRankBuilder.toString());
 
         assertThat(board.showBoard()).isEqualTo(appendNewLine("♜♞♝♛♚♝♞♜") +
                                                         appendNewLine("♟♟♟♟♟♟♟♟") +

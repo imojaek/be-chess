@@ -14,7 +14,7 @@ public class Piece {
         BISHOP('♝','♗'),
         QUEEN('♛', '♕'),
         KING('♚', '♔'),
-        NO_PIECE('◻', '◻');
+        NO_PIECE('ㅁ', 'ㅁ');
 
         private final char blackRepresentation;
         private final char whiteRepresentation;
