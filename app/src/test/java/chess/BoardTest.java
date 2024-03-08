@@ -157,5 +157,17 @@ public class BoardTest {
         );
     }
 
+    @Test
+    @DisplayName("보드의 특정 좌표로 기물을 옮길 수 있어야 한다.")
+    public void move() throws Exception {
+        board.initializeEmpty();
+
+        String position = "B5";
+        Piece piece = Piece.createBlackRook();
+        board.move(position, piece);
+
+        assertThat(board.findPiece(position).isSamePiece(piece)).isTrue();
+        System.out.println(board.showBoard());
+    }
 
 }

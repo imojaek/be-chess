@@ -89,6 +89,14 @@ public class Board {
         }
     }
 
+    public void initializeEmpty() {
+        for (int rank = 1; rank <= 8; rank++) {
+            for (char file = 'A'; file <= 'H'; file++) {
+                add(Piece.createNewPiece(Color.NOCOLOR, Type.NO_PIECE), file + String.valueOf(rank));
+            }
+        }
+    }
+
     public int pieceCount() {
         return chessBoard.size();
     }
