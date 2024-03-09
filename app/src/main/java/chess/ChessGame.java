@@ -18,6 +18,9 @@ public class ChessGame {
             input = getLine();
             if (input.equals(START_GAME))
                 board.start();
+            if (Validator.isValidPosition(input)) {
+
+            }
         }
     }
 

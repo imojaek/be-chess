@@ -96,11 +96,12 @@ for (int file = 'A'; file <= 'H'; file++) {
 기물을 모두 추가하고 출력결과를 확인해보니, 폰만 출력되는 것을 확인했고, 이유를 찾아보니 폰의 position이 672 682 등의 숫자로만 되어있었습니다. 
 int형 file을 사용해서 벌어진 문제였고, char형으로 변경해서 의도했던 동작을 하도록 수정했습니다.
 
+---
 
 ### 추가적인 키워드
 ParameterizedTest
 - 어떤 메소드를 테스트할 때, 여러가지 데이터를 매개인자로 넣어 테스트할 수 있도록 해준다.
-- ValueSource, CsvSource, EnumSource 
+- ValueSource, CsvSource, EnumSource 등
 - NullSource, EmptySource, NullAndEmptySource
   - 위와 아래의 source를 동시에 사용할 수 있다. 빈 문자 뿐 아니라 추가로 유효한 문자를 넣고 싶다면 아래와 같이..
 
@@ -127,3 +128,84 @@ private static Stream<String> isBlank_ShouldReturnTrueForNullOrBlankStringsOneAr
 ```
 
 https://www.baeldung.com/parameterized-tests-junit-5
+
+---
+
+## 테스트코드의 메소드가 public이어야 했고, 이제는 public이 아니어도 되는 이유?
+
+[칼리아 PR에 있는 호눅스 코멘트](https://github.com/codesquad-members-2024/be-chess/pull/107/files/3190f431b61aa9b8882cc10772d787bad9e1ee24#r1515378529) 
+
+이전에도 그랬고, 지금도 그렇듯 테스트를 작성할때 다른 메소드들을 `리플렉션`으로 받아와서 테스트를 했다.
+
+그런데, JUnit이 만들어지던 시기의 Java는 JDK1.1 버전이었고, 이때의 자바는 리플렉션을 public 메소드에서만 허용을 했기 때문이라고 한다.
+
+그러한 이유로 JUnit의 테스트메소드가 public이어야 한다는 제약이 생겼다. JDK의 제약은 1.2버전부터 리플렉션을 모든 접근권한에서 가능토록 바꾸었지만, JUnit의 제약은 JUnit4까지 지속되었다.
+
+그리고 JUnit5 부터는 이러한 제약이 사라지고, 테스트메소드의 어노테이션으로 @Test를 주어야 한다는 제약만 남았다.
+
+https://mangkyu.tistory.com/280
+https://groups.google.com/g/ksug/c/xpJpy8SCrEE?pli=1
+
+## 테스트코드를 위한 메소드를 어떻게 처리해야 하는가?
+
+1. public 으로 선언해서 사용한다.
+2. 다른 접근제한자로 선언해두고, 테스트코드에서 리플렉션을 사용해 불러온다.
+3. 어떻게 할까?
+
+---
+### Step - 5
+
+- [x] Piece 내부에 enum 선언해서 색상과 기물 정보를 담아둔다.
+- 빈칸을 모두 NO_PIECE로 채워야 하나..??
+  - Map으로 관리하는 체스보드에서 빈칸인지 확인은 HashMap.containsKey 로 확인하면 될 것 같은데...
+- `(Why?) 왜 그렇게 하면 좋은지에 대해 생각해 보자.` 
+  - 모든 칸에 같은 타입의 객체인 Piece를 두면, 이후 기물들간의 상호작용 로직을 원활하게 할 수 있을까?
+  - 이동도 Piece 서로 간의 교환을 통해서?
+
+- [x] 색, 기물종류 별 개수 확인하기 - countPiece(Color, Type)
+- [x] 주어진 위치의 기물조회 - findPiece(String position)
+
+- Move(Piece, String position) 
+  - 단순히 Piece를 해당 위치로 옮긴다?
+  - [x] 이동 위치의 Piece와 이동할 Piece의 위치를 교환한다?
+    - 64개 Piece를 유지하면서 상식으로는 일반적인 흐름.
+  - 체스보드를 해시맵으로 구현했기 때문에, 목표 좌표에 해당하는 요소를 제거하고, put(position, Piece) 로 넣어줬습니다.
+
+
+- isSameColor, isSameType 을 만들어뒀는데 `isSamePiece` 에 대해서는 나중에 효용을 다시 판단할 필요가 있음.
+
+---
+
+
+이 메소드의 존재로 나머지 코드가 사실상 중복코드가 되어 버렸네요.
+Piece(color, type) 생성자와 어떤 차이가 있을까요?
+
+
+
+---
+
+Spring 코드
+
+캡슐화 상속화 추상화 다형성
+
+테스트코드 DisplayName
+
+코드, 테스트코드가 모두 깔끔하면 주석 없이도 이해가 편하지만, 그렇지 않기때문에 복잡한 메소드으 ㅣ경우 주석 한두줄정도.
+
+유지보수 > 가독성 > 성능 : 
+
+덩치가 커진 클래스는 복잡해지면 다른 클래스로 책임을 위임(전가)하며 덩치를 줄일 수 있다.
+
+이중 리스트의 의미 -> 일급객체를 사용해보라고.
+
+> PR은 기능 단위, 커밋 단위는 가장 작게. (메소드 하나정도?) 
+> 커밋 메시지를 한줄로 요약할 수 없다? "~고" 같은 말이 들어간다? 좀 더 줄여야한다.
+
+> 원격 저장소의 커밋은 건들지 말자. 읽기 전용이라고 생각할 것. 다른 사람이 사용할 때 문제가 생길 수 있음.
+
+> 상속보다는 컴포지션을 사용하라.
+
+> 작은 목표를 세워서 성공경험을 느껴라. 그리고 칭찬해라.
+
+
+> WAS + HTTP

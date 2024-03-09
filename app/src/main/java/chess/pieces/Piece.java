@@ -164,7 +164,7 @@ public class Piece {
     }
 
     public boolean isSameColor(Color compareColor) {
-        return this.color.equals(compareColor);
+        return this.color.equals(compareColor); // ==
     }
 
     public boolean isSameType(Type compareType) {
